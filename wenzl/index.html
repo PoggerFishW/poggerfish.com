@@ -48,10 +48,10 @@
 
     <!-- Background Image -->
     <!-- Using a placeholder image. Replace this URL with your desired image. -->
-    <img src="https://placehold.co/1920x1080/000000/FFFFFF?text=YOUR+IMAGE+HERE"
+    <img src="https://github.com/PoggerFishW/poggerfish.com/blob/main/wenzlllllllllll.png?raw=true"
          alt="Background Image"
          class="background-image"
-         onerror="this.src='https://placehold.co/1920x1080/4F46E5/FFFFFF?text=Image+Load+Error';">
+         onerror="this.src='https://github.com/PoggerFishW/poggerfish.com/blob/main/wenzlllllllllll.png?raw=true';">
 
     <!-- Audio Player -->
     <!-- Replace 'your_audio_file.mp3' with the actual URL of your MP3 file. -->
@@ -64,52 +64,30 @@
     <!-- Overlay Text for Autoplay Hint -->
     <div id="autoplayHint" class="overlay-text text-xl md:text-2xl lg:text-3xl hidden">
         <p>Click anywhere to start the music!</p>
-        <p class="text-sm">(If you were redirected here, enjoy the site!)</p>
     </div>
 
     <script>
         // Get the audio element
         const backgroundAudio = document.getElementById('backgroundAudio');
         const autoplayHint = document.getElementById('autoplayHint');
-        const targetReferrer = 'www.poggerfishw.com';
-        const redirectUrl = 'https://www.poggerfishw.com';
 
-        // Redirection Logic
-        // Check if the referrer is not the desired site
-        // An empty referrer means direct access, bookmark, or new tab.
-        // It's crucial to check for 'origin' in referrer to handle cases where protocol/subdomain might differ.
-        const currentReferrer = document.referrer;
-        const referrerHostname = currentReferrer ? new URL(currentReferrer).hostname : '';
-
-        // Debugging output (can be removed in production)
-        console.log("Current Referrer:", currentReferrer);
-        console.log("Referrer Hostname:", referrerHostname);
-        console.log("Target Referrer:", targetReferrer);
-
-        if (!currentReferrer || !referrerHostname.includes(targetReferrer)) {
-            console.log("Redirecting to:", redirectUrl);
-            window.location.replace(redirectUrl); // Use replace to prevent back button from returning
-        } else {
-            console.log("Not redirecting. Referrer is from the target site.");
-
-            // If not redirected, attempt to play audio and show hint if autoplay fails
-            backgroundAudio.play().then(() => {
-                // Autoplay successful, hide hint
+        // Attempt to play audio
+        backgroundAudio.play().then(() => {
+            // Autoplay successful, hide hint and unmute
+            autoplayHint.style.display = 'none';
+            backgroundAudio.muted = false;
+        }).catch(error => {
+            // Autoplay failed, show hint
+            console.error("Autoplay prevented:", error);
+            autoplayHint.style.display = 'block';
+            // Listen for a user click to start playback
+            document.addEventListener('click', function userInitiatedPlay() {
+                backgroundAudio.muted = false; // Unmute
+                backgroundAudio.play();
                 autoplayHint.style.display = 'none';
-                backgroundAudio.muted = false; // Unmute if autoplay was successful
-            }).catch(error => {
-                // Autoplay failed, show hint
-                console.error("Autoplay prevented:", error);
-                autoplayHint.style.display = 'block';
-                // Listen for a user click to start playback
-                document.addEventListener('click', function userInitiatedPlay() {
-                    backgroundAudio.muted = false; // Unmute
-                    backgroundAudio.play();
-                    autoplayHint.style.display = 'none';
-                    document.removeEventListener('click', userInitiatedPlay); // Remove listener after first click
-                }, { once: true }); // Ensure the listener only fires once
-            });
-        }
+                document.removeEventListener('click', userInitiatedPlay); // Remove listener after first click
+            }, { once: true }); // Ensure the listener only fires once
+        });
     </script>
 </body>
 </html>
