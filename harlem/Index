@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Find Your Harlem</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: #f0f0f0;
+      font-family: 'Space Mono', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .title-screen, .questionnaire, .result {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .title-screen.active,
+    .questionnaire.active,
+    .result.active {
+      display: flex;
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    h1 {
+      font-family: 'Anton', sans-serif;
+      font-size: 4rem;
+      color: #ff0055;
+      text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055;
+    }
+
+    button {
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      background: #ff0055;
+      color: black;
+      border: none;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #ff3366;
+    }
+
+    .question {
+      margin-bottom: 1.5rem;
+    }
+
+    input {
+      padding: 0.8rem;
+      font-size: 1rem;
+      width: 100%;
+      max-width: 400px;
+      background: #111;
+      border: 1px solid #ff0055;
+      color: #fff;
+      margin-top: 0.5rem;
+    }
+
+    .result h2 {
+      font-size: 2rem;
+      color: #00ffaa;
+      text-shadow: 0 0 10px #00ffaa;
+    }
+
+    .result p {
+      font-style: italic;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="title-screen active">
+    <h1>FIND YOUR HARLEM</h1>
+    <p>It’s not a place. It’s a vibe. Let’s go.</p>
+    <button onclick="startJourney()">Enter</button>
+  </div>
+
+  <div class="questionnaire">
+    <div class="question">
+      <label>What’s your late-night craving?</label><br>
+      <input type="text" id="q1">
+    </div>
+    <div class="question">
+      <label>Pick a word that feels powerful to you:</label><br>
+      <input type="text" id="q2">
+    </div>
+    <div class="question">
+      <label>What color is your energy today?</label><br>
+      <input type="text" id="q3">
+    </div>
+    <button onclick="revealHarlem()">Reveal My Harlem</button>
+  </div>
+
+  <div class="result">
+    <h2 id="harlemTitle"></h2>
+    <p id="harlemMessage"></p>
+    <button onclick="location.reload()">Find It Again</button>
+  </div>
+
+  <script>
+    function startJourney() {
+      document.querySelector('.title-screen').classList.remove('active');
+      document.querySelector('.questionnaire').classList.add('active');
+    }
+
+    function revealHarlem() {
+      const q1 = document.getElementById('q1').value.trim();
+      const q2 = document.getElementById('q2').value.trim();
+      const q3 = document.getElementById('q3').value.trim();
+
+      const harlemTitle = `Your Harlem is: ${q2.toUpperCase()} IN ${q3.toUpperCase()}`;
+      const message = `When you're craving ${q1}, you’re not just hungry. You're remembering the rhythm. 
+      Your Harlem lives in the spaces between beats, neon dreams, and whatever the hell this all means.`;
+
+      document.querySelector('.questionnaire').classList.remove('active');
+      document.getElementById('harlemTitle').textContent = harlemTitle;
+      document.getElementById('harlemMessage').textContent = message;
+      document.querySelector('.result').classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
