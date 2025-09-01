@@ -167,28 +167,31 @@
             const secretPhrase = 'wenzl';
             const harlemPhrase = 'harlem';
 
-            document.addEventListener('keydown', (event) => {
-                // Add the typed character to our string
-                typedCharacters += event.key.toLowerCase();
+document.addEventListener('keydown', (event) => {
+    typedCharacters += event.key.toLowerCase();
 
-                // Keep the string's length at most the length of the secret phrase
-                if (typedCharacters.length > secretPhrase.length) {
-                    typedCharacters = typedCharacters.substring(typedCharacters.length - secretPhrase.length);
-                }
+    // Keep string trimmed to the length of the longest phrase
+    const maxLength = Math.max(secretPhrase.length, harlemPhrase.length);
+    if (typedCharacters.length > maxLength) {
+        typedCharacters = typedCharacters.substring(typedCharacters.length - maxLength);
+    }
 
-                // Check if the typed characters match the secret phrase
-                if (typedCharacters === secretPhrase) {
-                    console.log("Secret phrase 'wenzl' typed! Redirecting...");
-                    window.location.href = 'http://www.poggerfish.com/wenzl';
+    // Check for each phrase
+    if (typedCharacters.endsWith(secretPhrase)) {
+        console.log("Secret phrase 'wenzl' typed! Redirecting...");
+        window.location.href = 'http://www.poggerfish.com/wenzl';
+    }
 
-                 if (typedCharacters === harlemPhrase) {
-                    console.log("Secret phrase 'wenzl' typed! Redirecting...");
-                    window.location.href = 'http://www.poggerfish.com/harlem';
-                }
-            });
+    if (typedCharacters.endsWith(harlemPhrase)) {
+        console.log("Secret phrase 'harlem' typed! Redirecting...");
+        window.location.href = 'http://www.poggerfish.com/harlem';
+    }
+});
+
             // =========================================
         });
     </script>
 </body>
 
 </html>
+
