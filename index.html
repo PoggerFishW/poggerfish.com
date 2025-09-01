@@ -165,6 +165,7 @@
             // === New feature for "wenzl" redirect ===
             let typedCharacters = '';
             const secretPhrase = 'wenzl';
+            const harlemPhrase = 'harlem';
 
             document.addEventListener('keydown', (event) => {
                 // Add the typed character to our string
@@ -179,10 +180,15 @@
                 if (typedCharacters === secretPhrase) {
                     console.log("Secret phrase 'wenzl' typed! Redirecting...");
                     window.location.href = 'http://www.poggerfish.com/wenzl';
+
+                 if (typedCharacters === harlemPhrase) {
+                    console.log("Secret phrase 'wenzl' typed! Redirecting...");
+                    window.location.href = 'http://www.poggerfish.com/harlem';
                 }
             });
             // =========================================
         });
     </script>
 </body>
+
 </html>
