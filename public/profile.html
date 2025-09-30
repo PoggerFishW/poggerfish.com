@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - ChatSphere</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="auth-container">
+        <h1>Update Profile</h1>
+        <form id="profileForm">
+            <input type="text" id="username" placeholder="Username (cannot change)" readonly>
+            <input type="text" id="displayName" placeholder="Display Name">
+            <input type="file" id="profilePic" accept="image/*">
+            <button type="submit">Update</button>
+        </form>
+        <h2>Upload Custom Emoji</h2>
+        <form id="emojiForm">
+            <input type="text" id="emojiName" placeholder="Emoji Name" required>
+            <input type="file" id="emojiFile" accept="image/*" required>
+            <button type="submit">Upload Emoji</button>
+        </form>
+        <a href="/">Back to Chat</a>
+    </div>
+    <script>
+        const user = JSON.parse(localStorage.getItem('user'));
+        document.getElementById('username').value = user.username;
+        document.getElementById('displayName').value = user.displayName;
+
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append('username', user.username);
+            formData.append('displayName', document.getElementById('displayName').value);
+            if (document.getElementById('profilePic').files[0]) {
+                formData.append('profilePic', document.getElementById('profilePic').files[0]);
+            }
+            const res = await fetch('/updateProfile', {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+                body: formData,
+            });
+            const data = await res.json();
+            if (data.success) {
+                alert('Profile updated');
+                window.location.href = '/';
+            }
+        });
+
+        document.getElementById('emojiForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append('emojiName', document.getElementById('emojiName').value);
+            formData.append('emoji', document.getElementById('emojiFile').files[0]);
+            const res = await fetch('/uploadEmoji', {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+                body: formData,
+            });
+            const data = await res.json();
+            if (data.success) {
+                alert('Emoji uploaded');
+                document.getElementById('emojiForm').reset();
+            }
+        });
+    </script>
+</body>
+</html>

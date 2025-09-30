@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatSphere</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <h1>ChatSphere</h1>
+            <div class="channels">
+                <h2>Channels</h2>
+                <ul>
+                    <li class="active" data-type="channel" data-id="general">General</li>
+                    <li data-type="channel" data-id="random">Random</li>
+                </ul>
+            </div>
+            <div class="users">
+                <h2>Direct Messages</h2>
+                <ul id="userList"></ul>
+            </div>
+            <a href="/profile.html">Profile Settings</a>
+        </aside>
+        <main class="chat">
+            <header>
+                <h2 id="chatTitle"># General</h2>
+            </header>
+            <div class="messages" id="messages"></div>
+            <form id="messageForm">
+                <input type="text" id="messageInput" placeholder="Type a message..." autocomplete="off">
+                <div id="autocomplete" class="autocomplete"></div>
+                <button type="submit">Send</button>
+            </form>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

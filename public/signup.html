@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - ChatSphere</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="auth-container">
+        <h1>ChatSphere</h1>
+        <form id="signupForm">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="text" id="displayName" placeholder="Display Name" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <input type="file" id="profilePic" accept="image/*">
+            <button type="submit">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="/login.html">Log in</a></p>
+    </div>
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append('username', document.getElementById('username').value);
+            formData.append('displayName', document.getElementById('displayName').value);
+            formData.append('password', document.getElementById('password').value);
+            formData.append('profilePic', document.getElementById('profilePic').files[0]);
+            const res = await fetch('/signup', { method: 'POST', body: formData });
+            const data = await res.json();
+            if (data.success) {
+                window.location.href = '/login.html';
+            } else {
+                alert(data.error);
+            }
+        });
+    </script>
+</body>
+</html>
